@@ -1,0 +1,13 @@
+# RM Methodic Cycling videos to transcribe.
+# One URL per line. Lines starting with # are ignored.
+# Run: uv run rmcycling --urls-file videos.txt
+
+https://www.youtube.com/watch?v=coWRxDydPy4
+https://www.youtube.com/watch?v=evPdLCHEbDk
+https://www.youtube.com/watch?v=wPKTjZOblzw
+https://www.youtube.com/watch?v=FFetfYsT7G8
+https://www.youtube.com/watch?v=O0h19l_uWlI
+https://www.youtube.com/watch?v=YWNWuKaw3-E
+https://www.youtube.com/watch?v=Bmf2IDbEfjg
+https://www.youtube.com/watch?v=Q1LKaCF34e0
+https://www.youtube.com/watch?v=sYasccMFcQQ

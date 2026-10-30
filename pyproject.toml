@@ -1,0 +1,26 @@
+[project]
+name = "rmcycling"
+version = "0.1.0"
+description = "Turn RM Methodic Cycling (and any) YouTube videos into clean text transcripts to feed a Claude session that builds structured indoor-trainer workouts."
+readme = "README.md"
+authors = [
+    { name = "Joris Caloud", email = "joris.caloud@gmail.com" }
+]
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "yt-dlp>=2024.1.0",
+]
+
+[project.optional-dependencies]
+# Local Whisper fallback, only pulled when a video has no usable captions.
+# Install with: uv sync --extra whisper
+whisper = [
+    "faster-whisper>=1.0.0",
+]
+
+[project.scripts]
+rmcycling = "rmcycling.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.8.23,<0.9.0"]
+build-backend = "uv_build"
