@@ -75,10 +75,23 @@ flow synthesizes them into a personalized plan:
 
 Either way you get intervals.icu syntax + a `.zwo` file + where it fits your block.
 
+## Upload to intervals.icu
+
+Save the sessions as a `plan.json` (see `plan.example.json`), then push them onto
+your calendar — intervals.icu auto-syncs the week to Zwift.
+
+```bash
+cp .env.example .env        # add INTERVALS_ATHLETE_ID + INTERVALS_API_KEY
+uv run python -m rmcycling.upload plan.json --replace    # --replace swaps the date range cleanly
+uv run python -m rmcycling.upload --set-ftp 250 --weight 71   # set profile FTP/weight
+uv run python -m rmcycling.upload plan.json --dry-run    # preview without sending
+```
+
+Get your key from intervals.icu → Settings → Developer Settings. It's a full-account
+credential — it lives only in `.env` (gitignored) and can be regenerated anytime.
+
 ## Roadmap (not built yet)
 
-- **Phase 2:** a small `upload.py` that POSTs the generated workout to the
-  intervals.icu calendar API (basic auth with an API key) so it auto-syncs to Zwift.
 - **Phase 3:** optional frame-grab OCR for videos whose power targets live only in
   on-screen graphics, not speech.
 

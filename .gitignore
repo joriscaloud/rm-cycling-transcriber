@@ -16,3 +16,10 @@ workouts/
 *.bin
 .cache/
 
+# Secrets (intervals.icu API key etc.)
+.env
+
+# Personal training plan (regenerated per block)
+plan.json
+PLAN.md
+

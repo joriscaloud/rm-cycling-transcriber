@@ -1,0 +1,12 @@
+[
+  {
+    "date": "2026-11-05",
+    "name": "FTP Test — 20min",
+    "description": "Warmup\n- 10m ramp 45-65%\n\n2x\n- 1m 115%\n- 1m 50%\n\n- 4m 55%\n\nTest\n- 20m freeride\n\nCooldown\n- 10m ramp 60-40%"
+  },
+  {
+    "date": "2026-11-07",
+    "name": "SV1 Base — 3x15 @80%",
+    "description": "Warmup\n- 10m ramp 50-75%\n\n3x\n- 15m 80%\n- 5m 55%\n\nCooldown\n- 8m ramp 60-40%"
+  }
+]
