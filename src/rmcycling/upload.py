@@ -105,14 +105,27 @@ class IntervalsClient:
         status, _ = self._call("DELETE", f"/events/{event_id}")
         return status
 
-    def set_ftp(self, ftp: int | None, weight: float | None) -> tuple[int, object]:
-        """Update cycling FTP and/or weight on the athlete profile."""
-        settings: dict = {}
+    def set_ftp(self, ftp: int | None, weight: float | None) -> list[tuple[str, int]]:
+        """Update cycling FTP (per-sport settings) and/or weight (athlete object)."""
+        results: list[tuple[str, int]] = []
         if ftp is not None:
-            settings["ftp"] = ftp
+            status, ss = self._call("GET", "/sport-settings")
+            cyc = None
+            if status == 200 and isinstance(ss, list):
+                cyc = next(
+                    (s for s in ss
+                     if any(t in ("Ride", "VirtualRide") for t in (s.get("types") or []))),
+                    None,
+                )
+            if cyc:
+                st, _ = self._call("PUT", f"/sport-settings/{cyc['id']}", {"ftp": ftp})
+                results.append(("ftp", st))
+            else:
+                results.append(("ftp", status))  # couldn't find cycling settings
         if weight is not None:
-            settings["icu_weight"] = weight
-        return self._call("PUT", "/settings", settings)
+            st, _ = self._call("PUT", "", {"icu_weight": weight})  # PUT /athlete/{id}
+            results.append(("weight", st))
+        return results
 
 
 def upload_plan(plan_path: str, dry_run: bool = False, replace: bool = False) -> int:
@@ -159,8 +172,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.set_ftp is not None or args.weight is not None:
         client = IntervalsClient(*_load_env())
-        status, resp = client.set_ftp(args.set_ftp, args.weight)
-        log.info("set profile -> %s", status if status == 200 else f"{status} {resp}")
+        for field, status in client.set_ftp(args.set_ftp, args.weight):
+            log.info("set %s -> %s", field, "OK" if status == 200 else status)
 
     if args.plan:
         return upload_plan(args.plan, dry_run=args.dry_run, replace=args.replace)
